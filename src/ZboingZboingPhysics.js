@@ -196,6 +196,7 @@ const ZboingZboingPhysics = function(threeScene, threeSkinnedMesh, bonesPhysicsS
   this.skeleton.bones = this.rigidSkeleton.bones.map(function(rigidBone){
     // bones loose their linking, so they are positionned in the world space now
     const bone = new THREE.Bone();
+    bone.name = rigidBone.name;
     rigidBone.getWorldScale(bone.scale);
     threeScene.add(bone);
 
