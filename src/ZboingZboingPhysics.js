@@ -84,7 +84,7 @@ function update_bonePhysics(dt, bone, rigidBone){
     strengthSum.add(strength);
   }
 
-  update_physicsPosition(dt, strengthSum, bone.position, bone.userData.startWorldVelocity);
+  update_physicsPosition(dt, strengthSum, bone.userData.nextStartPosition, bone.userData.startWorldVelocity);
 
   // apply physics to update world bone end position:
   if (rigidBone.children.length > 0){
@@ -99,8 +99,17 @@ function update_bonePhysics(dt, bone, rigidBone){
       strengthSum.add(strength);
     });    
 
-    update_physicsPosition(dt, strengthSum, bone.userData.endWorldPosition, bone.userData.endWorldVelocity);
+    update_physicsPosition(dt, strengthSum, bone.userData.nextEndWorldPosition, bone.userData.endWorldVelocity);
   }
+}
+
+
+function apply_bonePhysics(bone){
+  if (bone.userData.physicsSettings === null) {
+    return;
+  }
+  bone.position.copy(bone.userData.nextStartPosition);
+  bone.userData.endWorldPosition.copy(bone.userData.nextEndWorldPosition);
 }
 
 
@@ -213,6 +222,8 @@ const ZboingZboingPhysics = function(threeScene, threeSkinnedMesh, bonesPhysicsS
       startWorldVelocity: new THREE.Vector3(),
       endWorldVelocity: new THREE.Vector3(),
       endWorldPosition: (options.isDebug && debugEndPositionMesh) ? debugEndPositionMesh.position : new THREE.Vector3(),
+      nextStartPosition: new THREE.Vector3(),
+      nextEndWorldPosition: new THREE.Vector3(),
       ind: boneIndex,
       parent: null,
       children: []
@@ -271,6 +282,7 @@ const ZboingZboingPhysics = function(threeScene, threeSkinnedMesh, bonesPhysicsS
         const rigidBone = that.rigidSkeleton.bones[boneIndex];
         update_bonePhysics(dtStep, bone, rigidBone);
       });
+      this.skeleton.bones.forEach(apply_bonePhysics);
     }
 
     // apply endbonepositions by changing bone orientations:
