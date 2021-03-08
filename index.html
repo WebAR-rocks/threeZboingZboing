@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>THREEZBOING ZBOING</title>
+  <script type="module" src='src/main.js'></script>
+
+  <style type='text/css'>
+    body {
+      background-color: silver;
+      margin: 0;
+    }
+
+    #three {
+      background-color: #66ccff;
+    }
+  </style>
+</head>
+<body>
+  <canvas id='three' width=800 height=600></canvas>
+  <br/>
+  <button onclick='PARENTTHREEOBJ.rotateZ(Math.PI/3)'>RotZ +</button>
+  <button onclick='PARENTTHREEOBJ.rotateZ(-Math.PI/3)'>RotZ -</button>
+  <button onclick='PARENTTHREEOBJ.position.setX(PARENTTHREEOBJ.position.x + 0.5)'>TransX +</button>
+  <button onclick='PARENTTHREEOBJ.position.setX(PARENTTHREEOBJ.position.x - 0.5)'>TransX -</button>
+  <button onclick='toggle_animation()'>Toggle animation</button>
+</body>
+</html> 
