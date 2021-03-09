@@ -49,7 +49,10 @@ Where:
       spring: 0.000004
     }
     ```
-* `<Dict> options` are some useless options
+* `<Dict> options` are some options:
+  * `<int> simuStepsCount`: number of simulation steps per update. The default value is `3`,
+  * `<float> internalStrengthFactor`: force applied between a bone and its children / parent relative to the force applied between a point and its rigid position. Default value is `0.5`
+  * `<bool> isDebug`: Default is `false`. If `true`, the rigid skinned mesh will be added to the scene
 
 
 **WARNING**: to animate your skinned mesh, you should not directly create an instance of `THREE.AnimationMixer` using the skinned mesh. You need to proceed this way:
@@ -74,8 +77,17 @@ When we create the physics, we replace the swap the skeleton of the skinned mesh
 The old skeleton is still here and called the rigid skeleton. But it is hidden. Each bone of the new skeleton is simulated using damper-spring systems:
 
 * between the start of the bone and the start of the rigid skeleton bone
+* between the end of the bone and the end of the rigid skeleton bone
 * between the start of the bone and its parent
 * between the end of the bone and its children
+* inside the bone (start -> end and end -> start)
+
+
+## Workaround
+
+The THREE GLTF importer does not give access to the end positions of the bones. So we compute the end position of a bone by computing the mean of its children positions. But if the bone had no child, we cannot compute its end position, so only half of the bone will be simulated.
+
+As a workaround, it is better to add a useless bone at the end of each bone chain which should be simulated.
 
 
 ## License
