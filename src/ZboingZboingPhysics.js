@@ -115,7 +115,7 @@ function update_bonePhysics(dt, k, bone, rigidBone){
     strengthSum.add(strengthInternal);
   }
 
-  update_physicsPosition(dt, strengthSum, bone.userData.nextStartPosition, bone.userData.startWorldVelocity);
+  update_physicsPosition(dt, strengthSum, bone.userData.nextStartWorldPosition, bone.userData.startWorldVelocity);
 
   // apply physics to update world bone end position:
   if (rigidBone.children.length > 0){
@@ -142,7 +142,7 @@ function apply_bonePhysics(bone){
   if (bone.userData.physicsSettings === null) {
     return;
   }
-  bone.position.copy(bone.userData.nextStartPosition);
+  bone.position.copy(bone.userData.nextStartWorldPosition);
   bone.userData.endWorldPosition.copy(bone.userData.nextEndWorldPosition);
 }
 
@@ -258,7 +258,7 @@ const ZboingZboingPhysics = function(threeScene, threeSkinnedMesh, bonesPhysicsS
       startWorldVelocity: new THREE.Vector3(),
       endWorldVelocity: new THREE.Vector3(),
       endWorldPosition: (options.isDebug && debugEndPositionMesh) ? debugEndPositionMesh.position : new THREE.Vector3(),
-      nextStartPosition: new THREE.Vector3(),
+      nextStartWorldPosition: new THREE.Vector3(),
       nextEndWorldPosition: new THREE.Vector3(),
       ind: boneIndex,
       parent: null,
@@ -310,6 +310,7 @@ const ZboingZboingPhysics = function(threeScene, threeSkinnedMesh, bonesPhysicsS
     if (this.needsReset){
       this.reset();
       this.needsReset = false;
+      return;
     }
 
     const dtStep = dt / options.simuStepsCount;
@@ -331,9 +332,22 @@ const ZboingZboingPhysics = function(threeScene, threeSkinnedMesh, bonesPhysicsS
   this.reset = function(){
     this.skeleton.bones.forEach(function(bone, boneIndex){
       const rigidBone = that.rigidSkeleton.bones[boneIndex];
+
+      // reset positions:
       bone.userData.endWorldPosition.copy(rigidBone.userData.endWorldPosition);
       bone.position.copy(rigidBone.userData.startWorldPosition);
-    })
+
+      // reset next positions:
+      bone.userData.nextStartWorldPosition.copy(bone.position);
+      bone.userData.nextEndWorldPosition.copy(bone.userData.endWorldPosition);
+
+      // reset rotation:
+      rigidBone.getWorldQuaternion(bone.quaternion);
+
+      // reset velocities:
+      bone.userData.startWorldVelocity.set(0, 0, 0);
+      bone.userData.endWorldVelocity.set(0, 0, 0);
+    });
   }
 
 
