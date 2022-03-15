@@ -349,7 +349,9 @@ const ZboingZboingPhysics = function(threeScene, threeSkinnedMesh, bonesPhysicsS
 
     // apply endbonepositions by changing bone orientations:
     this.skeleton.bones.forEach(function(bone, boneIndex){
-      update_boneRotation(bone, that.rigidSkeleton.bones[boneIndex]);
+      if (bone.userData.isRoot || options.gravity === 0.0){
+        update_boneRotation(bone, that.rigidSkeleton.bones[boneIndex]);
+      }
     });
   }
 

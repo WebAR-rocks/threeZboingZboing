@@ -17,7 +17,7 @@ const SETTINGS = {
 
   simuStepsCount: 1, // default: 3
 
-  gravity: 5,
+  gravity: 20,
   
   bonesPhysics: {
     DEFAULT: {
@@ -87,7 +87,7 @@ function main(){
     
     physics = new ZboingZboingPhysics(scene, skinnedMesh, SETTINGS.bonesPhysics, {
       isDebug: false,
-      internalStrengthFactor: 0.0,
+      internalStrengthFactor: 0.5,
       simuStepsCount: SETTINGS.simuStepsCount,
       gravity: SETTINGS.gravity
       //bonesNamesShouldContain: '_rigleft',
