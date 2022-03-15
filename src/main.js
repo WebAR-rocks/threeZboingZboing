@@ -14,9 +14,17 @@ window.PARENTTHREEOBJ = null;
 const SETTINGS = {
   meshPath: 'assets/poulpi.glb',
   skinnedMeshName: null,
+
+  simuStepsCount: 1, // default: 3
+
+  gravity: 5,
   
   bonesPhysics: {
     DEFAULT: {
+      damperRange: [5, 20],
+      springRange: [50, 100]
+    } 
+    /*DEFAULT: {
       damperRange: [0.001, 0.005],
       springRange: [0.00001, 0.000005]
     } /*
@@ -78,7 +86,11 @@ function main(){
     window.PARENTTHREEOBJ = model;
     
     physics = new ZboingZboingPhysics(scene, skinnedMesh, SETTINGS.bonesPhysics, {
-      isDebug: false
+      isDebug: false,
+      internalStrengthFactor: 0.0,
+      simuStepsCount: SETTINGS.simuStepsCount,
+      gravity: SETTINGS.gravity
+      //bonesNamesShouldContain: '_rigleft',
     });
 
     // handle animation:
