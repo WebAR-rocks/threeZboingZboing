@@ -1,7 +1,7 @@
-import * as THREE from '../libs/three/v126/build/three.module.js';
+import * as THREE from '../libs/three/v136/build/three.module.js';
 
-import { OrbitControls } from '../libs/three/v126/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from '../libs/three/v126/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from '../libs/three/v136/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from '../libs/three/v136/examples/jsm/loaders/GLTFLoader.js';
 
 import { ZboingZboingPhysics } from './ZboingZboingPhysics.js';
 
@@ -17,7 +17,7 @@ const SETTINGS = {
 
   simuStepsCount: 1, // default: 3
 
-  gravity: 20,
+  gravity: 0,
   
   bonesPhysics: {
     DEFAULT: {

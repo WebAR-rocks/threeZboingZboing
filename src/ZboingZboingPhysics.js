@@ -23,8 +23,8 @@
 
 /* eslint-disable */
 
-import * as THREE from '../libs/three/v126/build/three.module.js';
-import { SkeletonUtils } from '../libs/three/v126/examples/jsm/utils/SkeletonUtils.js';
+import * as THREE from '../libs/three/v136/build/three.module.js';
+import * as SkeletonUtils from '../libs/three/v136/examples/jsm/utils/SkeletonUtils.js';
 
 
 // allocate intermediary vectorz here, not in the rendering loop:
