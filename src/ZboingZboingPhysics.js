@@ -107,11 +107,11 @@ function update_bonePhysics(dt, k, gravity, bone, rigidBone){
   strengthSum.copy(strength);
 
   // compute strength pulling to parent:
-  if (bone.userData.parent && k !== 0){
+  /*if (bone.userData.parent && k !== 0){
     compute_strength(physicsSettings, bone.userData.parent.userData.endWorldPosition, bone.position, bone.userData.startWorldVelocity, strength);
     strength.multiplyScalar(k);
     strengthSum.add(strength);
-  }
+  }*/
 
   // internal strength pulling the start from the end of the bone:
   if (rigidBone.children.length > 0 && k !== 0){
